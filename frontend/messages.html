@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudySync - My Groups</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/authGuard.js"></script>
+  <script>protectPage();</script>
+</head>
+<body>
+
+  <header class="top-header">
+    <div class="header-logo">
+      <div class="logo-icon">👥</div>
+      <span>Study Groups</span>
+    </div>
+    <button class="header-menu-btn" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <div class="page-content">
+    <div class="section-header" style="margin-bottom:16px">
+      <div>
+        <h1>My Study Groups</h1>
+        <p>Manage your active study group memberships</p>
+      </div>
+      <a href="groups.html" class="btn btn-primary btn-sm">+ Find More</a>
+    </div>
+
+    <div id="myGroupsList">
+      <div class="loading-state"><div class="loading-spinner"></div></div>
+    </div>
+
+    <div class="section-header" style="margin-top:24px;margin-bottom:12px">
+      <span style="font-size:16px;font-weight:700">Recent Messages</span>
+      <span class="view-all">View All</span>
+    </div>
+
+    <div class="message-list" id="recentMessages">
+      <div class="loading-state"><div class="loading-spinner"></div></div>
+    </div>
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="index.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+      Home
+    </a>
+    <a href="courses.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 14H8v-2h8v2zm0-4H8v-2h8v2zm0-4H8V6h8v2z"/></svg>
+      Courses
+    </a>
+    <a href="groups.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+      Groups
+    </a>
+    <a href="messages.html" class="nav-item active">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+      My Groups
+    </a>
+    <a href="profile.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+      Profile
+    </a>
+  </nav>
+
+  <div class="toast" id="toast"></div>
+  <script src="js/api.js"></script>
+  <script src="js/messages.js"></script>
+</body>
+</html>

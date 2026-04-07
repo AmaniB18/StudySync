@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudySync - Profile</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/authGuard.js"></script>
+  <script>protectPage();</script>
+</head>
+<body>
+
+  <header class="top-header">
+    <div class="header-logo">
+      <div class="logo-icon">👥</div>
+      <span>Study Groups</span>
+    </div>
+    <button class="header-menu-btn" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <div class="page-content">
+    <div class="section-header" style="margin-bottom:16px">
+      <div>
+        <h1>My Profile</h1>
+        <p>Manage your account information and preferences</p>
+      </div>
+    </div>
+
+    <!-- Profile Hero -->
+    <div class="profile-hero" id="profileHero">
+      <div class="profile-avatar" id="profileAvatar">?</div>
+      <h2 id="profileName">Loading...</h2>
+      <p id="profileEmail">—</p>
+      <button class="profile-edit-btn" onclick="openEditModal()">✏️ Edit Profile</button>
+    </div>
+
+    <!-- Stats -->
+    <div class="profile-stats-grid">
+      <div class="profile-stat">
+        <div class="p-stat-icon blue">👥</div>
+        <div class="p-num" id="pActiveGroups">—</div>
+        <div class="p-label">Active Groups</div>
+      </div>
+      <div class="profile-stat">
+        <div class="p-stat-icon green">📚</div>
+        <div class="p-num" id="pCourses">—</div>
+        <div class="p-label">Courses Enrolled</div>
+      </div>
+      <div class="profile-stat">
+        <div class="p-stat-icon purple">⏰</div>
+        <div class="p-num" id="pHours">—</div>
+        <div class="p-label">Study Hours</div>
+      </div>
+    </div>
+
+    <!-- Account Information -->
+    <div class="info-list">
+      <h3>Account Information</h3>
+      <div class="info-row">
+        <div class="info-left">
+          <div class="info-icon">👤</div>
+          <div>
+            <div class="info-label">Full Name</div>
+            <div class="info-value" id="infoName">—</div>
+          </div>
+        </div>
+        <button class="edit-btn" onclick="openEditModal()">Edit</button>
+      </div>
+      <div class="info-row">
+        <div class="info-left">
+          <div class="info-icon">✉️</div>
+          <div>
+            <div class="info-label">Email Address</div>
+            <div class="info-value" id="infoEmail">—</div>
+          </div>
+        </div>
+        <button class="edit-btn" onclick="openEditModal()">Edit</button>
+      </div>
+      <div class="info-row">
+        <div class="info-left">
+          <div class="info-icon">🎓</div>
+          <div>
+            <div class="info-label">Major</div>
+            <div class="info-value" id="infoMajor">—</div>
+          </div>
+        </div>
+        <button class="edit-btn" onclick="openEditModal()">Edit</button>
+      </div>
+      <div class="info-row">
+        <div class="info-left">
+          <div class="info-icon">🎓</div>
+          <div>
+            <div class="info-label">Year Level</div>
+            <div class="info-value" id="infoYear">—</div>
+          </div>
+        </div>
+        <button class="edit-btn" onclick="openEditModal()">Edit</button>
+      </div>
+      <div class="info-row">
+        <div class="info-left">
+          <div class="info-icon">🗓️</div>
+          <div>
+            <div class="info-label">Member Since</div>
+            <div class="info-value" id="infoSince">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Availability Link -->
+    <div class="info-list" style="margin-bottom:16px">
+      <h3>Schedule</h3>
+      <a href="availability.html" class="info-row" style="text-decoration:none;color:inherit">
+        <div class="info-left">
+          <div class="info-icon">⏰</div>
+          <div>
+            <div class="info-label">My Availability</div>
+            <div class="info-value">Set your weekly schedule</div>
+          </div>
+        </div>
+        <span style="color:var(--text-muted);font-size:18px">›</span>
+      </a>
+    </div>
+
+    <!-- Security -->
+    <div class="info-list" style="margin-bottom:16px">
+      <h3>Security</h3>
+      <div class="info-row">
+        <div class="info-left">
+          <div class="info-icon">🔒</div>
+          <div>
+            <div class="info-label">Password</div>
+            <div class="info-value">Change Password</div>
+          </div>
+        </div>
+        <button class="edit-btn" onclick="openPasswordModal()">Edit</button>
+      </div>
+      <div class="info-row">
+        <div class="info-left">
+          <div class="info-icon">🛡️</div>
+          <div>
+            <div class="info-label">Two-Factor Authentication</div>
+            <div class="info-value" style="color:var(--text-muted);font-size:13px">Not enabled</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Danger Zone -->
+    <div class="danger-zone">
+      <h3>⚠️ Danger Zone</h3>
+      <p>Once you delete your account, there is no going back. Please be certain.</p>
+      <button class="btn btn-danger btn-sm" onclick="confirmDelete()">Delete Account</button>
+    </div>
+
+    <button class="btn btn-outline btn-full" onclick="logout()" style="margin-bottom:16px">
+      Sign Out
+    </button>
+  </div>
+
+  <!-- Edit Profile Modal -->
+  <div class="modal-overlay" id="editModal">
+    <div class="modal">
+      <h3>Edit Profile</h3>
+      <div class="form-group">
+        <label>Full Name</label>
+        <input class="form-control" type="text" id="editName">
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input class="form-control" type="email" id="editEmail">
+      </div>
+      <div class="form-group">
+        <label>Major</label>
+        <input class="form-control" type="text" id="editMajor" placeholder="e.g. Computer Science">
+      </div>
+      <div class="form-group">
+        <label>Year Level</label>
+        <select class="form-control" id="editYear">
+          <option value="1">Year 1 (Freshman)</option>
+          <option value="2">Year 2 (Sophomore)</option>
+          <option value="3">Year 3 (Junior)</option>
+          <option value="4">Year 4 (Senior)</option>
+          <option value="5">Year 5</option>
+          <option value="6">Year 6</option>
+        </select>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:8px">
+        <button class="btn btn-outline" style="flex:1" onclick="closeEditModal()">Cancel</button>
+        <button class="btn btn-primary" style="flex:2" onclick="saveProfile()">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Change Password Modal -->
+  <div class="modal-overlay" id="passwordModal">
+    <div class="modal">
+      <h3>Change Password</h3>
+      <div class="form-group">
+        <label>New Password</label>
+        <input class="form-control" type="password" id="newPassword" placeholder="Enter new password">
+      </div>
+      <div class="form-group">
+        <label>Confirm Password</label>
+        <input class="form-control" type="password" id="confirmPassword" placeholder="Confirm new password">
+      </div>
+      <div style="display:flex;gap:10px;margin-top:8px">
+        <button class="btn btn-outline" style="flex:1" onclick="closePasswordModal()">Cancel</button>
+        <button class="btn btn-primary" style="flex:2" onclick="savePassword()">Update Password</button>
+      </div>
+    </div>
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="index.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+      Home
+    </a>
+    <a href="courses.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 14H8v-2h8v2zm0-4H8v-2h8v2zm0-4H8V6h8v2z"/></svg>
+      Courses
+    </a>
+    <a href="groups.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+      Groups
+    </a>
+    <a href="messages.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+      My Groups
+    </a>
+    <a href="profile.html" class="nav-item active">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+      Profile
+    </a>
+  </nav>
+
+  <div class="toast" id="toast"></div>
+  <script src="js/api.js"></script>
+  <script src="js/profile.js"></script>
+</body>
+</html>

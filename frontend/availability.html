@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudySync - My Availability</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/authGuard.js"></script>
+  <script>protectPage();</script>
+</head>
+<body>
+
+  <header class="top-header">
+    <div class="header-logo">
+      <div class="logo-icon">👥</div>
+      <span>Study Groups</span>
+    </div>
+    <button class="header-menu-btn" onclick="history.back()" aria-label="Back">
+      <svg viewBox="0 0 24 24" fill="currentColor" style="width:22px;height:22px"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+    </button>
+  </header>
+
+  <div class="page-content">
+    <div class="section-header" style="margin-bottom:16px">
+      <div>
+        <h1>My Availability</h1>
+        <p>Set your weekly availability to help match with study groups</p>
+      </div>
+    </div>
+
+    <div class="info-banner">
+      <div class="banner-icon">🕐</div>
+      <div>
+        <h4>How Availability Works</h4>
+        <p>Add your available time slots throughout the week. This helps study groups find meeting times that work for everyone. You can add multiple slots per day.</p>
+      </div>
+    </div>
+
+    <!-- Add Slot Form -->
+    <div class="avail-form">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <h3 style="font-size:15px;font-weight:700">Weekly Schedule</h3>
+        <button class="btn btn-primary btn-sm" onclick="addSlot()">+ Add Time Slot</button>
+      </div>
+
+      <div class="form-group">
+        <label>Day of Week</label>
+        <select class="form-control" id="newDay">
+          <option value="Monday">Monday</option>
+          <option value="Tuesday">Tuesday</option>
+          <option value="Wednesday">Wednesday</option>
+          <option value="Thursday">Thursday</option>
+          <option value="Friday">Friday</option>
+          <option value="Saturday">Saturday</option>
+          <option value="Sunday">Sunday</option>
+        </select>
+      </div>
+
+      <div class="avail-form" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0;box-shadow:none;margin-bottom:0">
+        <div class="form-group" style="margin-bottom:0">
+          <label>Start Time</label>
+          <div style="display:flex;align-items:center;gap:8px">
+            <input class="form-control" type="time" id="newStart" value="09:00">
+            <button onclick="deleteSelectedSlot()" style="background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:18px">🗑️</button>
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:0">
+          <label>End Time</label>
+          <input class="form-control" type="time" id="newEnd" value="11:00">
+        </div>
+      </div>
+    </div>
+
+    <!-- Existing Slots -->
+    <div style="margin-bottom:20px">
+      <div id="slotsList"></div>
+    </div>
+
+    <!-- Weekly Summary -->
+    <div class="weekly-summary">
+      <h3>Weekly Summary</h3>
+      <div id="weeklySummary"></div>
+    </div>
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="index.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+      Home
+    </a>
+    <a href="courses.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 14H8v-2h8v2zm0-4H8v-2h8v2zm0-4H8V6h8v2z"/></svg>
+      Courses
+    </a>
+    <a href="groups.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+      Groups
+    </a>
+    <a href="messages.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+      My Groups
+    </a>
+    <a href="profile.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+      Profile
+    </a>
+  </nav>
+
+  <div class="toast" id="toast"></div>
+  <script src="js/api.js"></script>
+  <script src="js/availability.js"></script>
+</body>
+</html>

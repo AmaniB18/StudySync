@@ -30,18 +30,28 @@ async function loadGroups() {
     container.appendChild(div);
   });
 }
+
 async function joinGroup(gid, button) {
   const sid = localStorage.getItem("sid");
 
-  const res = await fetch("/group-members", {
+  const payload = {
+    sid: Number(sid),
+    gid: gid
+  };
+
+  console.log("SENDING TO BACKEND:", payload);
+
+  const res = await fetch("http://127.0.0.1:5000/group-members", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ sid, gid })
+    body: JSON.stringify(payload)
   });
 
-  const data = await res.json();
+  const data = await res.json().catch(() => ({}));
+
+  console.log("BACKEND RESPONSE:", data);
 
   if (res.ok) {
     button.innerText = "Joined ✓";

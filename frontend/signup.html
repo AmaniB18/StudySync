@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+
+<body>
+
+    <div class="auth-box">
+
+        <h2>Sign Up</h2>
+
+        <input id="full_name" placeholder="Full Name" />
+        <input id="email" placeholder="Email" />
+        <input id="password" type="password" placeholder="Password" />
+        <input id="major" placeholder="Major (optional)" />
+        <input id="year_level" placeholder="Year Level (optional)" />
+
+        <button onclick="signup()">Sign Up</button>
+
+        <p id="msg"></p>
+
+        <p>
+            Already have an account?
+            <a href="login.html">login</a>
+        </p>
+
+    </div>
+
+    <script>
+        const API_URL = "http://127.0.0.1:5000";
+
+        async function signup() {
+            const res = await fetch(API_URL + "/students", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    full_name: document.getElementById("full_name").value,
+                    email: document.getElementById("email").value,
+                    password: document.getElementById("password").value,
+                    major: document.getElementById("major").value,
+                    year_level: document.getElementById("year_level").value
+                })
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+                document.getElementById("msg").innerText = "account created 🎉";
+
+                setTimeout(() => {
+                    window.location.href = "login.html";
+                }, 1000);
+            } else {
+                document.getElementById("msg").innerText = "Missing required information";
+            }
+        }
+    </script>
+
+</body>
+
+</html>

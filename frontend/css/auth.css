@@ -1,0 +1,81 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #eef2f7, #f7f9fc);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* container box */
+.auth-box {
+  background: white;
+  padding: 35px;
+  border-radius: 14px;
+  width: 360px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+/* title */
+.auth-box h2 {
+  margin-bottom: 20px;
+}
+
+/* inputs */
+.auth-box input {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  transition: 0.2s;
+}
+
+.auth-box input:focus {
+  border-color: #4a90e2;
+}
+
+/* button */
+.auth-box button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  background: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.auth-box button:hover {
+  background: #357bd8;
+}
+
+/* links */
+.auth-box a {
+  display: block;
+  margin-top: 12px;
+  color: #4a90e2;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.auth-box a:hover {
+  text-decoration: underline;
+}
+
+/* message */
+#msg {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+#error, #msg {
+  margin-top: 10px;
+  font-size: 14px;
+  color: red;
+}

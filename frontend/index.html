@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div class="nav">
+        <a href="index.html">Home</a>
+        <a href="courses.html">Courses</a>
+        <a href="groups.html">Groups</a>
+        <a href="messages.html">My Groups</a>
+        <a href="profile.html">Profile</a>
+    </div>
+
+    <h1>Dashboard</h1>
+    <p>Welcome back! Here's your study activity overview</p>
+
+    <div class="cards">
+        <div class="card">
+            <h2 id="groupsCount">0</h2>
+            <p>Active Groups</p>
+        </div>
+
+        <div class="card">
+            <h2 id="coursesCount">0</h2>
+            <p>My Courses</p>
+        </div>
+        <div class="card">
+            <h2 id="sessionsCount">0</h2>
+            <p>Upcoming Sessions</p>
+        </div>
+
+        <div class="card">
+            <h2 id="hoursCount">0</h2>
+            <p>Study Hours</p>
+        </div>
+
+    </div>
+
+    <h2>Upcoming Sessions</h2>
+    <div id="sessionsContainer"></div>
+
+    <script src="js/api.js"></script>
+    <script src="js/dashboard.js"></script>
+
+</body>
+
+</html>

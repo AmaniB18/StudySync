@@ -2,6 +2,7 @@ from flask import request
 from flask_restful import Resource
 from extensions import db
 from models.group_member import GroupMember
+from models.study_group import StudyGroup
 
 
 class GroupMemberListResource(Resource):
@@ -27,22 +28,25 @@ class GroupMemberListResource(Resource):
     def post(self):
         data = request.get_json()
 
-        try:
-            member = GroupMember(
-                sid=data["sid"],
-                gid=data["gid"],
-                role=data.get("role", "member"),
-                status=data.get("status", "active")
-            )
+        group = StudyGroup.query.get(data["gid"])
 
-            db.session.add(member)
-            db.session.commit()
+        if not group:
+            return {"message": "Group not found"}, 404
 
-            return {"message": "Group member added successfully"}, 201
+        current_count = GroupMember.query.filter_by(gid=data["gid"]).count()
 
-        except Exception as e:
-            return {"message": "Error adding group member", "error": str(e)}, 400
+        if current_count >= group.max_members:
+            return {"message": "Group is full"}, 400
 
+        member = GroupMember(
+            sid=data["sid"],
+            gid=data["gid"]
+        )
+
+        db.session.add(member)
+        db.session.commit()
+
+        return {"message": "Joined group"}, 201
 
 class GroupMemberResource(Resource):
 

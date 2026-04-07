@@ -28,29 +28,33 @@
 
         <script>
             async function login() {
-                const email = document.getElementById("email").value;
-                const password = document.getElementById("password").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
 
-                const res = await fetch("http://127.0.0.1:5000/login", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({ email, password })
-                });
+    const res = await fetch("http://127.0.0.1:5000/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email, password })
+    });
 
-                const data = await res.json();
-                console.log(data);
+    const data = await res.json();
+    console.log("LOGIN RESPONSE:", data);
 
-                if (res.ok && data.token) {
-                    localStorage.setItem("token", data.token);
-                    document.getElementById("msg").innerText = "login successful";
+    if (res.ok && data.token) {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("sid", data.user.sid);
 
-                    window.location.href = "/index.html";
-                } else {
-                    document.getElementById("msg").innerText = data.message || "login failed";
-                }
-            }
+        console.log("SID SAVED:", localStorage.getItem("sid"));
+
+        document.getElementById("msg").innerText = "login successful";
+
+        window.location.href = "/index.html";
+    } else {
+        document.getElementById("msg").innerText = data.message || "login failed";
+    }
+}
         </script>
 
 </body>

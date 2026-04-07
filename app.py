@@ -23,6 +23,59 @@ from models.group_member import GroupMember
 from models.availability import Availability
 from models.message import Message
 
+def seed_demo_data():
+    if Course.query.first():
+        return
+
+    courses = [
+        Course(name="CS101 - Intro to Web"),
+        Course(name="CS102 - Databases"),
+        Course(name="CS103 - Algorithms"),
+        Course(name="CS104 - Operating Systems"),
+        Course(name="CS105 - Networks"),
+        Course(name="CS106 - Software Engineering"),
+        Course(name="CS107 - AI Basics"),
+        Course(name="CS108 - Data Structures")
+    ]
+
+    db.session.add_all(courses)
+    db.session.commit()
+
+    groups = [
+        # CS101
+        StudyGroup(name="Web Group A", course_id=courses[0].id, capacity=5),
+        StudyGroup(name="Web Group B", course_id=courses[0].id, capacity=6),
+
+        # CS102
+        StudyGroup(name="DB Group A", course_id=courses[1].id, capacity=4),
+        StudyGroup(name="DB Group B", course_id=courses[1].id, capacity=5),
+
+        # CS103
+        StudyGroup(name="Algo Group A", course_id=courses[2].id, capacity=6),
+
+        # CS104
+        StudyGroup(name="OS Group A", course_id=courses[3].id, capacity=5),
+        StudyGroup(name="OS Group B", course_id=courses[3].id, capacity=5),
+
+        # CS105
+        StudyGroup(name="Networks Group A", course_id=courses[4].id, capacity=4),
+
+        # CS106
+        StudyGroup(name="SE Group A", course_id=courses[5].id, capacity=6),
+        StudyGroup(name="SE Group B", course_id=courses[5].id, capacity=5),
+
+        # CS107
+        StudyGroup(name="AI Group A", course_id=courses[6].id, capacity=5),
+
+        # CS108
+        StudyGroup(name="DS Group A", course_id=courses[7].id, capacity=6),
+        StudyGroup(name="DS Group B", course_id=courses[7].id, capacity=5),
+    ]
+
+    db.session.add_all(groups)
+    db.session.commit()
+
+    print("demo data seeded: 8 courses + groups ready")
 
 def create_app():
     app = Flask(__name__)
@@ -81,6 +134,8 @@ def create_app():
     api.add_resource(MessageListResource, "/messages")
     api.add_resource(MessageResource, "/messages/<int:mid>")
 
+    with app.app_context():
+        seed_demo_data()
 
     return app
 

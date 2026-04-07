@@ -38,35 +38,19 @@ def dashboard():
 
     # Unique courses
     course_ids = set()
-    now = datetime.utcnow()
-    upcoming_sessions = []
 
     for m in memberships:
         group = StudyGroup.query.get(m.gid)
         if not group:
             continue
         course_ids.add(group.cid)
-        course = Course.query.get(group.cid)
-
-        if group.next_meeting and group.next_meeting >= now:
-            upcoming_sessions.append({
-                "gid": group.gid,
-                "title": group.group_name,
-                "course_code": course.course_code if course else "",
-                "course_name": course.course_name if course else "",
-                "next_meeting": group.next_meeting.isoformat(),
-                "meeting_mode": group.meeting_mode,
-                "location": group.location
-            })
-
-    upcoming_sessions.sort(key=lambda s: s["next_meeting"])
 
     return {
         "active_groups": active_groups,
         "my_courses": len(course_ids),
-        "upcoming_sessions": len(upcoming_sessions),
+        "upcoming_sessions": 0,   # removed next_meeting logic
         "total_study_hours": active_groups * 2,
-        "sessions": upcoming_sessions[:5]
+        "sessions": []            # no sessions for now
     }
 
 
@@ -86,6 +70,7 @@ def my_groups():
         if not group:
             continue
         course = Course.query.get(group.cid)
+
         result.append({
             "gid": group.gid,
             "group_name": group.group_name,
@@ -95,7 +80,6 @@ def my_groups():
             "max_members": group.max_members,
             "meeting_mode": group.meeting_mode,
             "location": group.location,
-            "next_meeting": group.next_meeting.isoformat() if group.next_meeting else None,
             "role": m.role,
             "unread": len(group.messages)
         })
@@ -111,6 +95,7 @@ def my_availability():
 
     from models.availability import Availability
     avail = Availability.query.filter_by(sid=student_id).all()
+
     return [
         {
             "aid": a.aid,

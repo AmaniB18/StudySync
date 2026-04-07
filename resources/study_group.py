@@ -12,13 +12,6 @@ class StudyGroupListResource(Resource):
     def post(self):
         data = request.get_json()
 
-        next_meeting = None
-        if data.get("next_meeting"):
-            try:
-                next_meeting = datetime.fromisoformat(data["next_meeting"])
-            except (ValueError, TypeError):
-                pass
-
         group = StudyGroup(
             cid=data["cid"],
             group_name=data["group_name"],
@@ -26,7 +19,7 @@ class StudyGroupListResource(Resource):
             max_members=data.get("max_members"),
             meeting_mode=data.get("meeting_mode"),
             location=data.get("location"),
-            next_meeting=next_meeting
+
         )
 
         db.session.add(group)
@@ -62,11 +55,7 @@ class StudyGroupResource(Resource):
         g.meeting_mode = data.get("meeting_mode", g.meeting_mode)
         g.location = data.get("location", g.location)
 
-        if data.get("next_meeting"):
-            try:
-                g.next_meeting = datetime.fromisoformat(data["next_meeting"])
-            except (ValueError, TypeError):
-                pass
+        
 
         db.session.commit()
         return {"message": "Group updated"}, 200
@@ -94,6 +83,5 @@ def _serialize_group(g):
         "member_count": member_count,
         "meeting_mode": g.meeting_mode,
         "location": g.location,
-        "next_meeting": g.next_meeting.isoformat() if g.next_meeting else None,
         "created_at": g.created_at.isoformat()
     }

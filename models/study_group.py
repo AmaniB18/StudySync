@@ -13,7 +13,6 @@ class StudyGroup(db.Model):
     max_members = db.Column(db.Integer, db.CheckConstraint("max_members > 0"), nullable=True)
     meeting_mode = db.Column(db.String(50), db.CheckConstraint("meeting_mode IN ('online', 'in-person', 'hybrid')"), nullable=True)
     location = db.Column(db.String(100), nullable=True)
-    next_meeting = db.Column(db.DateTime, nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
 
     # Relationships

@@ -24,15 +24,25 @@ class StudyGroupListResource(Resource):
 
         return {"message": "Group created"}, 201
 
-    # READ ALL
     def get(self):
-        groups = StudyGroup.query.all()
+        cid = request.args.get("cid")
+
+        query = StudyGroup.query
+
+        if cid:
+            query = query.filter_by(cid=cid)
+
+        groups = query.all()
 
         return [
             {
                 "gid": g.gid,
                 "group_name": g.group_name,
-                "cid": g.cid
+                "description": g.description,
+                "cid": g.cid,
+                "max_members": g.max_members,
+                "meeting_mode": g.meeting_mode,
+                "location": g.location
             }
             for g in groups
         ], 200
@@ -49,7 +59,12 @@ class StudyGroupResource(Resource):
 
         return {
             "gid": g.gid,
-            "group_name": g.group_name
+            "group_name": g.group_name,
+            "description": g.description,
+            "cid": g.cid,
+            "max_members": g.max_members,
+            "meeting_mode": g.meeting_mode,
+            "location": g.location
         }, 200
 
     # UPDATE
@@ -63,6 +78,9 @@ class StudyGroupResource(Resource):
 
         g.group_name = data.get("group_name", g.group_name)
         g.description = data.get("description", g.description)
+        g.max_members = data.get("max_members", g.max_members)
+        g.meeting_mode = data.get("meeting_mode", g.meeting_mode)
+        g.location = data.get("location", g.location)
 
         db.session.commit()
 

@@ -25,16 +25,21 @@ class CourseListResource(Resource):
 
     # READ ALL (USER-SPECIFIC)
     @token_required
-    def get(self, user_id):
-
-        courses = Course.query.filter_by(student_id=user_id).all()
+    def get(self):
+        courses = Course.query.all()
 
         return [
             {
                 "cid": c.cid,
                 "course_code": c.course_code,
                 "course_name": c.course_name,
-                "semester": c.semester
+                "semester": c.semester,
+
+               
+                "group_count": len(c.study_groups),
+
+              
+                "student_count": sum(len(g.members) for g in c.study_groups)
             }
             for c in courses
         ], 200

@@ -5,31 +5,36 @@
   <title>Courses</title>
   <link rel="stylesheet" href="css/courses.css">
   <link rel="stylesheet" href="css/style.css">
+  <script src="js/authGuard.js"></script>
+  <script>
+    protectPage();
+  </script>
 </head>
 
 <body>
 
-<div class="nav">
-  <a href="index.html">Dashboard</a>
-  <a href="courses.html">Courses</a>
-  <a href="groups.html">Groups</a>
-  <a href="messages.html">My Groups</a>
-  <a href="profile.html">Profile</a>
-</div>
+  <div class="nav">
+    <a href="index.html">Dashboard</a>
+    <a href="courses.html">Courses</a>
+    <a href="groups.html">Groups</a>
+    <a href="messages.html">My Groups</a>
+    <a href="profile.html">Profile</a>
+  </div>
 
-<div class="container">
+  <div class="container">
 
-  <h1>Courses</h1>
-  <p class="subtitle">Browse available courses and their study groups</p>
+    <h1>Courses</h1>
+    <p class="subtitle">Browse available courses and their study groups</p>
 
-  <input id="searchInput" placeholder="search by course code or name..." onkeyup="filterCourses()" />
+    <input id="searchInput" placeholder="search by course code or name..." onkeyup="filterCourses()" />
 
-  <div id="coursesList" class="courses-grid"></div>
+    <div id="coursesList" class="courses-grid"></div>
 
-</div>
+  </div>
 
-<script src="js/api.js"></script>
-<script src="js/courses.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/courses.js"></script>
 
 </body>
+
 </html>

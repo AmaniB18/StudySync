@@ -4,6 +4,8 @@
 <head>
     <title>Dashboard</title>
     <link rel="stylesheet" href="css/style.css">
+    <script src="js/authGuard.js"></script>
+    
 </head>
 
 <body>
@@ -46,7 +48,11 @@
 
     <script src="js/api.js"></script>
     <script src="js/dashboard.js"></script>
+    <button onclick="logout()">Logout</button>
 
+    <script>
+        protectPage();
+    </script>
 </body>
 
 </html>

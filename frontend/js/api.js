@@ -10,17 +10,21 @@ async function apiGet(url) {
   const res = await fetch(API_URL + url, {
     headers: {
       "Content-Type": "application/json",
-      ...(token && { "Authorization": "Bearer " + token })
+      ...(token ? { Authorization: "Bearer " + token } : {})
     }
   });
 
-  if (res.status === 401 || res.status === 422) {
-    localStorage.removeItem("token");
-    //window.location.href = "/login.html";
-    return;
+  if (res.status === 401) {
+    console.log("401 unauthorized:", url);
+    return null;
   }
 
-  return res.json();
+  if (!res.ok) {
+    console.log("request failed:", res.status, url);
+    return null;
+  }
+
+  return await res.json();
 }
 
 

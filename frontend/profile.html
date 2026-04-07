@@ -1,25 +1,32 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>Profile</title>
   <link rel="stylesheet" href="css/style.css">
+  <script src="js/authGuard.js"></script>
+  <script>
+    protectPage();
+  </script>
 </head>
+
 <body>
 
-<div class="nav">
-  <a href="index.html">Home</a>
-  <a href="courses.html">Courses</a>
-  <a href="groups.html">Groups</a>
-  <a href="messages.html">Messages</a>
-  <a href="profile.html">Profile</a>
-</div>
+  <div class="nav">
+    <a href="index.html">Home</a>
+    <a href="courses.html">Courses</a>
+    <a href="groups.html">Groups</a>
+    <a href="messages.html">Messages</a>
+    <a href="profile.html">Profile</a>
+  </div>
 
-<h1>Profile</h1>
+  <h1>Profile</h1>
 
-<div id="profileBox"></div>
+  <div id="profileBox"></div>
 
-<script src="js/api.js"></script>
-<script src="js/profile.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/profile.js"></script>
 
 </body>
+
 </html>

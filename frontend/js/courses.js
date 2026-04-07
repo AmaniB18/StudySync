@@ -4,7 +4,7 @@ let allCourses = [];
 
 async function loadCourses() {
   const data = await apiGet("/courses");
-
+  if (!data) return; 
   allCourses = data;
   renderCourses(data);
 }

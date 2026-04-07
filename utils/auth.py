@@ -15,22 +15,24 @@ def check_password(password, hashed):
     return hash_password(password) == hashed
 
 #tOKEN MIDDLEWARE
-
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
 
-        token = request.headers.get("Authorization")
+        auth = request.headers.get("Authorization")
 
-        if not token:
+        if not auth:
             return {"message": "token missing"}, 401
+
+        token = auth.replace("Bearer ", "")
 
         try:
             data = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
-            current_user_id = data["user_id"]
-        except:
+            request.user_id = data.get("user_id") or data.get("sub")
+        except Exception as e:
+            print("JWT ERROR:", e)
             return {"message": "invalid token"}, 401
 
-        return f(current_user_id, *args, **kwargs)
+        return f(*args, **kwargs)   
 
     return decorated

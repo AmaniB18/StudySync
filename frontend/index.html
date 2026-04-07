@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudySync - Dashboard</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/authGuard.js"></script>
+  <script>protectPage();</script>
+</head>
+<body>
+  <!-- Side Drawer -->
+  <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+  <div class="drawer" id="drawer">
+    <div class="drawer-header">
+      <div class="d-avatar" id="drawerAvatar">?</div>
+      <h3 id="drawerName">StudySync</h3>
+      <p id="drawerEmail"></p>
+    </div>
+    <div class="drawer-nav">
+      <a href="index.html" class="active"><div class="d-icon">&#127968;</div> Home</a>
+      <a href="courses.html" class=""><div class="d-icon">&#128218;</div> Courses</a>
+      <a href="groups.html" class=""><div class="d-icon">&#128101;</div> Browse Groups</a>
+      <a href="messages.html" class=""><div class="d-icon">&#128203;</div> My Groups</a>
+      <a href="availability.html" class=""><div class="d-icon">&#128197;</div> My Availability</a>
+      <a href="profile.html" class=""><div class="d-icon">&#128100;</div> Profile</a>
+      <div class="drawer-divider"></div>
+      <button class="drawer-logout" onclick="drawerLogout()"><div class="d-icon">&#128682;</div> Sign Out</button>
+    </div>
+  </div>
+
+
+  <header class="top-header">
+    <div class="header-logo">
+      <div class="logo-icon">👥</div>
+      <span>Study Groups</span>
+    </div>
+    <button class="header-menu-btn" onclick="openDrawer()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <div class="page-content">
+    <div class="section-header" style="margin-bottom:20px">
+      <div>
+        <h1>Dashboard</h1>
+        <p id="welcomeMsg">Welcome back! Here's your study activity overview</p>
+      </div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon blue">👥</div>
+        <div class="stat-num" id="groupsCount">—</div>
+        <div class="stat-label">Active Groups</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon green">📚</div>
+        <div class="stat-num" id="coursesCount">—</div>
+        <div class="stat-label">My Courses</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon orange">🗓️</div>
+        <div class="stat-num" id="sessionsCount">—</div>
+        <div class="stat-label">Upcoming Sessions</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon purple">⏰</div>
+        <div class="stat-num" id="hoursCount">—</div>
+        <div class="stat-label">Study Hours</div>
+      </div>
+    </div>
+
+    <div class="section-header">
+      <span style="font-size:16px;font-weight:700">Upcoming Sessions</span>
+      <a href="messages.html" class="view-all">View All</a>
+    </div>
+    <div id="sessionsContainer">
+      <div class="loading-state"><div class="loading-spinner"></div></div>
+    </div>
+
+    <div class="section-header" style="margin-top:24px">
+      <span style="font-size:16px;font-weight:700">Recent Messages</span>
+      <a href="messages.html" class="view-all">View All</a>
+    </div>
+    <div id="messagesContainer">
+      <div class="loading-state"><div class="loading-spinner"></div></div>
+    </div>
+
+    <div class="cta-card">
+      <h3>Need help with a course?</h3>
+      <p>Find or create a study group to collaborate with classmates</p>
+      <a href="groups.html" class="btn-white">Find Study Groups</a>
+    </div>
+  </div>
+
+  <nav class="bottom-nav">
+    <a href="index.html" class="nav-item active">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+      Home
+    </a>
+    <a href="courses.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 14H8v-2h8v2zm0-4H8v-2h8v2zm0-4H8V6h8v2z"/></svg>
+      Courses
+    </a>
+    <a href="groups.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+      Groups
+    </a>
+    <a href="messages.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+      My Groups
+    </a>
+    <a href="profile.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+      Profile
+    </a>
+  </nav>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="js/api.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script>
+    function openDrawer() {
+      document.getElementById("drawer").classList.add("open");
+      document.getElementById("drawerOverlay").classList.add("open");
+    }
+    function closeDrawer() {
+      document.getElementById("drawer").classList.remove("open");
+      document.getElementById("drawerOverlay").classList.remove("open");
+    }
+    function drawerLogout() {
+      localStorage.clear();
+      window.location.href = "login.html";
+    }
+    const _sid = localStorage.getItem("sid");
+    if (_sid) {
+      fetch("http://127.0.0.1:5000/students/" + _sid, {
+        headers: { Authorization: "Bearer " + localStorage.getItem("token") }
+      }).then(r => r.json()).then(u => {
+        const ini = u.full_name ? u.full_name.split(" ").map(w=>w[0]).join("").toUpperCase().slice(0,2) : "?";
+        document.getElementById("drawerAvatar").textContent = ini;
+        document.getElementById("drawerName").textContent = u.full_name || "";
+        document.getElementById("drawerEmail").textContent = u.email || "";
+      }).catch(()=>{});
+    }
+  </script>
+</body>
+</html>

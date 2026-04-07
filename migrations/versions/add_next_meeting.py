@@ -1,0 +1,22 @@
+"""add next_meeting to study_groups
+
+Revision ID: a1b2c3d4e5f6
+Revises: 642de3a802af
+Create Date: 2026-04-07 00:00:00.000000
+
+"""
+from alembic import op
+import sqlalchemy as sa
+
+revision = 'a1b2c3d4e5f6'
+down_revision = '642de3a802af'
+branch_labels = None
+depends_on = None
+
+
+def upgrade():
+    op.add_column('study_groups', sa.Column('next_meeting', sa.DateTime(), nullable=True))
+
+
+def downgrade():
+    op.drop_column('study_groups', 'next_meeting')

@@ -7,7 +7,7 @@ function getToken() {
 async function apiGet(url) {
   const token = localStorage.getItem("token");
 
-  const res = await fetch("http://127.0.0.1:5000" + url, {
+  const res = await fetch(API_URL + url, {
     headers: {
       "Content-Type": "application/json",
       ...(token && { "Authorization": "Bearer " + token })
@@ -16,30 +16,14 @@ async function apiGet(url) {
 
   if (res.status === 401 || res.status === 422) {
     localStorage.removeItem("token");
-    window.location.href = "/login.html";
+    //window.location.href = "/login.html";
     return;
   }
 
   return res.json();
 }
 
-async function apiGet(url) {
-  const token = localStorage.getItem("token");
 
-  const res = await fetch(url, {
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": token ? "Bearer " + token : ""
-    }
-  });
-
-  if (res.status === 401) {
-    window.location.href = "/login.html";
-    return;
-  }
-
-  return res.json();
-}
 
 async function apiPost(url, data) {
   const res = await fetch(API_URL + url, {

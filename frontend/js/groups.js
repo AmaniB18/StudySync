@@ -22,10 +22,11 @@ async function loadGroups() {
   <h3>${g.group_name}</h3>
   <p>${g.description || ""}</p>
 
-  <button onclick="joinGroup(${g.gid})">
-    Join Group
-  </button>
+    <button onclick="joinGroup(${g.gid}, this)">
+  Join Group
+</button>
 `;
+
 
     container.appendChild(div);
   });
@@ -34,28 +35,24 @@ async function loadGroups() {
 async function joinGroup(gid, button) {
   const sid = localStorage.getItem("sid");
 
-  const payload = {
-    sid: Number(sid),
-    gid: gid
-  };
-
-  console.log("SENDING TO BACKEND:", payload);
-
   const res = await fetch("http://127.0.0.1:5000/group-members", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify(payload)
+    body: JSON.stringify({
+      sid: Number(sid),
+      gid: gid
+    })
   });
 
   const data = await res.json().catch(() => ({}));
 
-  console.log("BACKEND RESPONSE:", data);
-
   if (res.ok) {
+    
     button.innerText = "Joined ✓";
     button.disabled = true;
+    button.style.opacity = "0.6";
   } else {
     alert(data.message || "Failed to join");
   }
